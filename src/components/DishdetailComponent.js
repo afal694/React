@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Card, CardImg, CardText, CardTitle, CardBody } from "reactstrap";
+import { Card, CardImg, CardText, CardTitle, CardBody, ListGroup, ListGroupItem } from "reactstrap";
 
 export class DishDetaiLComponent extends Component {
 
@@ -8,23 +8,28 @@ export class DishDetaiLComponent extends Component {
 
     }
 
+    renderComments(commentsPar){
+        return commentsPar.map((comments) => {
+            return(
+                <ListGroupItem key={comments.id}>
+                    <p className="text-secondary">"{comments.comment}"</p>
+                    <p className="text-primary">{comments.author}</p>
+                </ListGroupItem>
+            );
+        });
+    }
+
     renderSelectedDish(dish){
 
         if(dish != null) {
 
-            const comments = dish.comments.map((comments) => {
-                return(
-                    <CardText key={comments.id}>
-                            {comments.comment}
-                    </CardText>
-                );
-            });
+
 
 
             return(
     
                 <div className="row">
-                    <div className="col-md-5 col-12">
+                    <div className="col-md-5 col-12 m-1">
                         <Card>
                         <CardImg width="100%" src={dish.image} alt={dish.name}></CardImg>
                         <CardBody>
@@ -34,14 +39,14 @@ export class DishDetaiLComponent extends Component {
                         </Card>
                     </div>
 
-                    <div className="col-md-5 col-12">
+                    <div className="col-md-5 col-12 m-1">
                         <Card>
                             <CardTitle>
-                                Comments
+                                <h4 className="text-info">Comments</h4>
                             </CardTitle>
-
-                            {comments}
-
+                            <ListGroup>
+                                {this.renderComments(dish.comments)}
+                            </ListGroup>
                         </Card>
                     </div>
                 </div>
