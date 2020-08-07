@@ -8,12 +8,23 @@ export class DishDetaiLComponent extends Component {
 
     }
 
+
+    componentDidMount(){
+        console.log('dishDetail component componentDidMount() is invoked');
+
+    }
+
+    componentDidUpdate(){
+        console.log('dishDetail component componentDidUpdate() is invoked');
+    }
+
+
     renderComments(commentsPar){
         const comments = commentsPar.map((comments) => {
             return(
                 <li key={comments.id}>
                     <p className="text-secondary">"{comments.comment}"</p>
-                    <p className="text-primary">{comments.author}  - - 
+                    <p className="text-primary">{comments.author}  - -  
                         {/* {comments.date.substring(0,10)} */}
                     {new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comments.date)))}
                     </p>
@@ -58,7 +69,9 @@ export class DishDetaiLComponent extends Component {
     }
 
     render() {
+        console.log('dishDetail render()');
         return(
+            
             <div className="container">
                 <div className="row">
                     {this.renderDish(this.props.dish)}

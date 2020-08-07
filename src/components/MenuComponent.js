@@ -50,7 +50,7 @@ class Menu extends Component {
             );
         });
 
-        console.log('Menu component reder() is invoked');
+        console.log('Menu component render() is invoked');
 
 
         return(
