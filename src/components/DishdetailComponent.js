@@ -13,7 +13,10 @@ export class DishDetaiLComponent extends Component {
             return(
                 <li key={comments.id}>
                     <p className="text-secondary">"{comments.comment}"</p>
-                    <p className="text-primary">{comments.author}  - - {comments.date.substring(0,10)}</p>
+                    <p className="text-primary">{comments.author}  - - 
+                        {/* {comments.date.substring(0,10)} */}
+                    {new Intl.DateTimeFormat('en-US',{year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comments.date)))}
+                    </p>
 
                 </li>
             );
@@ -56,9 +59,12 @@ export class DishDetaiLComponent extends Component {
 
     render() {
         return(
-            <div className="row">
-                {this.renderDish(this.props.dish)}
+            <div className="container">
+                <div className="row">
+                    {this.renderDish(this.props.dish)}
+                </div>
             </div>
+
         ); 
     }
 
