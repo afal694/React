@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Card, CardImg, CardText, CardTitle, CardBody, ListGroup, ListGroupItem } from "reactstrap";
+import { Card, CardImg, CardText, CardTitle, CardBody } from "reactstrap";
 
 export class DishDetaiLComponent extends Component {
 
@@ -9,23 +9,22 @@ export class DishDetaiLComponent extends Component {
     }
 
     renderComments(commentsPar){
-        return commentsPar.map((comments) => {
+        const comments = commentsPar.map((comments) => {
             return(
-                <ListGroupItem key={comments.id}>
+                <li key={comments.id}>
                     <p className="text-secondary">"{comments.comment}"</p>
-                    <p className="text-primary">{comments.author}</p>
-                </ListGroupItem>
+                    <p className="text-primary">{comments.author}  - - {comments.date.substring(0,10)}</p>
+
+                </li>
             );
         });
+
+        return comments
     }
 
-    renderSelectedDish(dish){
+    renderDish(dish){
 
         if(dish != null) {
-
-
-
-
             return(
     
                 <div className="row">
@@ -40,14 +39,10 @@ export class DishDetaiLComponent extends Component {
                     </div>
 
                     <div className="col-md-5 col-12 m-1">
-                        <Card>
-                            <CardTitle>
-                                <h4 className="text-info">Comments</h4>
-                            </CardTitle>
-                            <ListGroup>
-                                {this.renderComments(dish.comments)}
-                            </ListGroup>
-                        </Card>
+                        <h4 className="text-info">Comments</h4>
+                        <ul>
+                            {this.renderComments(dish.comments)}
+                        </ul>
                     </div>
                 </div>
             )
@@ -61,8 +56,8 @@ export class DishDetaiLComponent extends Component {
 
     render() {
         return(
-            <div className="col-12">
-                {this.renderSelectedDish(this.props.dish)}
+            <div className="row">
+                {this.renderDish(this.props.dish)}
             </div>
         ); 
     }
