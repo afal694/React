@@ -46,6 +46,8 @@ class FormComponent extends Component {
   handleSubmitComment(values) {
     console.log("Current values is: " + JSON.stringify(values));
     alert("Current values is: " + JSON.stringify(values));
+
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
   render() {
@@ -166,9 +168,10 @@ const DishDetail = (props) => {
       <div className="col-md-5 col-12 m-1">
         <h4 className="text-info">Comments</h4>
         <ul>
-          <RenderComments commentsPar={props.comments}/>
+          <RenderComments commentsPar={props.comments}
+          />
         </ul>
-        <FormComponent />
+        <FormComponent dishId={props.dish.id} addComment={props.addComment} />
       </div>
     </div>
   </div>);
