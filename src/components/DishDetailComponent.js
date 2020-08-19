@@ -18,6 +18,7 @@ import {
 } from "reactstrap";
 import {Link} from 'react-router-dom';
 import {Control, Errors, LocalForm} from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -51,9 +52,8 @@ class FormComponent extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <Button color="primary" onClick={this.toggleModal}>Leave a comment!</Button>
+    return (<div>
+      <Button color="primary" onClick={this.toggleModal}>Leave a comment!</Button>
 
       <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
         <ModalHeader toggle={this.toggleModal}>Modal Title</ModalHeader>
@@ -146,35 +146,62 @@ function RenderDish({dish}) {
 }
 
 const DishDetail = (props) => {
-  return (<div className="container">
-    <div className="row">
-      <Breadcrumb>
-        <BreadcrumbItem>
-          <Link to="/home">Home</Link>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <Link to="/menu">Menu</Link>
-        </BreadcrumbItem>
-        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
-      </Breadcrumb>
-      <div className="col-12">
-        <h3>{props.dish.name}</h3>
-        <hr/>
-      </div>
-    </div>
 
-    <div className="row">
-      <RenderDish dish={props.dish}/>
-      <div className="col-md-5 col-12 m-1">
-        <h4 className="text-info">Comments</h4>
-        <ul>
-          <RenderComments commentsPar={props.comments}
-          />
-        </ul>
-        <FormComponent dishId={props.dish.id} addComment={props.addComment} />
+  if (props.isLoading) {
+    return(
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
       </div>
-    </div>
-  </div>);
+    );
+  }
+  else if(props.errMess){
+    return(
+      <div className="container">
+        <div className="row">
+          <h4>{props.errMess}</h4>
+        </div>
+      </div>
+    );
+  }
+  else if (props.dish != null) {
+    return (<div className="container">
+      <div className="row">
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to="/home">Home</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <Link to="/menu">Menu</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem active="active">{props.dish.name}</BreadcrumbItem>
+        </Breadcrumb>
+        <div className="col-12">
+          <h3>{props.dish.name}</h3>
+          <hr/>
+        </div>
+      </div>
+
+      <div className="row">
+        <RenderDish dish={props.dish}/>
+        <div className="col-md-5 col-12 m-1">
+          <h4 className="text-info">Comments</h4>
+          <ul>
+            <RenderComments commentsPar={props.comments}/>
+          </ul>
+          <FormComponent dishId={props.dish.id} addComment={props.addComment}/>
+        </div>
+      </div>
+    </div>);
+
+  }
+  else {
+    return (
+      <div></div>
+    );
+  }
+
 }
 
 export default DishDetail;
