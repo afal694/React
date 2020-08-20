@@ -49,7 +49,7 @@ class FormComponent extends Component {
     console.log("Current values is: " + JSON.stringify(values));
     alert("Current values is: " + JSON.stringify(values));
 
-    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+    this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
   render() {
@@ -191,7 +191,7 @@ const DishDetail = (props) => {
           <ul>
             <RenderComments commentsPar={props.comments}/>
           </ul>
-          <FormComponent dishId={props.dish.id} addComment={props.addComment}/>
+          <FormComponent dishId={props.dish.id} postComment={props.postComment}/>
         </div>
       </div>
     </div>);
