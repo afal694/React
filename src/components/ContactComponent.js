@@ -26,6 +26,7 @@ class Contact extends Component {
   handleSubmit(values) {
     console.log("Current State is: " + JSON.stringify(values));
     alert("Current State is: " + JSON.stringify(values));
+    this.props.postFeedback(values.firstname, values.lastname, values.telnum, values.email, values.agree, values.contactType, values.message );
     this.props.resetFeedbackForm();
   }
 
@@ -135,7 +136,7 @@ class Contact extends Component {
               <Col md={10}>
                 <Control.text model=".email" id="email" name="email" placeholder="Email" className="form-control" validators={{
                     required,
-                    validEmail
+                    //validEmail
                   }}/>
                 <Errors className="text-danger" model=".email" show="touched" messages={{
                     required: ' Required',

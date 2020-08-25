@@ -201,3 +201,48 @@ export const addLeaders = (leaders) => ({
   type: ActionTypes.ADD_LEADERS,
   payload: leaders
 });
+
+// feedback
+
+export const postFeedback = (firstname, lastname, tel, email, agree, contactType, message) => (dispatch) => {
+
+  const newFeedback = {
+    firstname: firstname,
+    lastname: lastname,
+    tel: tel,
+    email: email,
+    agree: agree,
+    contactType: contactType,
+    message: message
+  }
+
+  newFeedback.date = new Date().toISOString();
+
+  return fetch(baseUrl+'feedback',{
+    method: 'POST',
+    body: JSON.stringify(newFeedback),
+    headers: {
+      'Content-type': 'application/json'
+    },
+    credentials: 'same-origin'
+  })
+  .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error' + response.status + ':' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+    error => {
+      var errmess = new Error(error.message);
+      throw errmess;
+    })
+    .then(response => response.json())
+    //.then(response => dispatch (addFeedback(response)))
+    .catch(error => {
+      console.log('Post feedback', error.message);
+      alert('your feedback could not be posted \n Error: '+ error.message);
+    })
+}
